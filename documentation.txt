@@ -1,0 +1,81 @@
+NPCS / ITEMS DOCUMENTATION
+
+NPCs configurations should be added to the npcs.js file located in the configuration folder
+Items configurations should be added to the items.js file located in the configuration folder
+Several sample configurations are located in these files (npcs.js, items.js)
+
+* configuration pattern *
+
+ELEMENT_NAME_IN_TILED:{ // name provided in Tiled map editor
+    //if name property is not given, a static npc will be created 
+    
+    assets:{ // if not provided, the default image will be used
+        image:"IMAGE_NAME_DECLARED_IN_PRELOADER", 
+        // it's best to leave it empty for now
+        // if not provided, the default image will be used
+    },
+
+    movementPatterns:[{ x:X_COORDINATE_OF_THE_DESTINATION , y: Y_COORDINATE_OF_THE_DESTINATION }]
+    // after a few seconds of pause at the target point, the npc will start to back up at the spawn point
+     // if  we want the npc not to move, leave the array empty, movementPatterns:[]
+     // at the moment, we can only provide one destination point, but if necessary, I can add the function of moving to several points one after another
+
+
+    distanceToDialogue:DISTANCE_IN_PIXELS // example, distanceToDialogue:100
+    // if not provided, the dialogue will open from any distance
+
+
+    // if config dialog is not given npc has no dialog
+    dialog: { // dialogue config
+      ANY_NAME: { // this property name does not matter, could be for example: TEST, welcome, start, etc.
+        say: "TEXT_TO_DISPLAY", // the first message immediately after opening the dialogue
+        answers: [ // buttons with answers, there may be one or two
+          {
+            reply: "TEXT_TO_DISPLAY_ON_BUTTON", 
+            linkTo: "NEXT_PROPERTY_NAME"  // the name can be anything but is required to continue the dialogue        
+            // linkTo is  the name of the property of the object containing the configuration for continuation of the dialog
+            // if not provided, the dialogue ends when this button is clicked
+          },
+          {
+            reply: "TEXT_TO_DISPLAY_ON_SECOND_BUTTON",
+            linkTo: "NEXT_PROPERTY_NAME" 
+       
+          }
+        ]
+      },
+      NEXT_PROPERTY_NAME_PROVIDED_IN_linkTo: {
+        say: "TEXT_TO_DISPLAY",
+        answers: [
+          {
+            reply: "TEXT_TO_DISPLAY_ON_BUTTON"
+          }
+        ]
+      },
+      NEXT_PROPERTY_NAME_PROVIDED_IN_linkTo: {
+        say: "TEXT_TO_DISPLAY",
+        answers: [
+          {
+            reply: "TEXT_TO_DISPLAY_ON_BUTTON"
+          }
+        ]
+      }
+    }
+}
+
+
+HOW TO ADD ITEMS / NPCS
+
+go to folder src => assets => TileMaps and open any map you want (.tmx)
+if you want to add NPC, click NPCs layer (if the layer does not exist yet, create it),
+ press "i" and click on the point where npc is to be located,
+ then provide NPC name which will be needed to reference this npc in the config file
+
+ Same process for items, but choose the correct layer
+
+After all File => export as => choose .json 
+and File => save (if everything works the way we want)
+
+IMPORTANT! in Tiled, the option in Edit => Settings => Embed Files, must be selected
+
+
+
